@@ -1,6 +1,5 @@
 export { GlassCard } from "./GlassCard";
 export { MagneticButton } from "./MagneticButton";
-export { CustomCursor } from "./CustomCursor";
 export { TextReveal } from "./TextReveal";
 export { SectionDivider } from "./SectionDivider";
 export { HorizontalSection } from "./HorizontalSection";
