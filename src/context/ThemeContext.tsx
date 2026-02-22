@@ -45,6 +45,10 @@ function applyThemeToDocument(isDark: boolean): void {
   } else {
     root.classList.remove("dark");
   }
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) {
+    meta.setAttribute("content", isDark ? "#050816" : "#fafafa");
+  }
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {

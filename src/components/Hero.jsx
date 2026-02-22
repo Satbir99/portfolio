@@ -1,29 +1,23 @@
-import { lazy, Suspense, useRef, useEffect } from "react";
+import { lazy, Suspense, useRef, useEffect, useMemo, memo } from "react";
 import { motion, useScroll } from "framer-motion";
 
 import { styles } from "../styles";
 import { TextReveal, SuspenseFallback } from "./ui";
 import { HeroScrollProvider } from "../context/HeroScrollContext";
 
-const ComputersCanvas = lazy(() =>
-  import("./canvas/Computers").then((m) => ({ default: m.default }))
-);
+const ComputersCanvas = lazy(() => import("./canvas/Computers"));
 
 const HERO_SCROLL_OFFSET = ["start start", "end start"];
+const MOUSE_SCROLL_TRANSITION = { duration: 1.5, repeat: Infinity, repeatType: "loop" };
 
-const Hero = () => {
+const Hero = memo(function Hero() {
   const sectionRef = useRef(null);
   const progressRef = useRef(0);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: HERO_SCROLL_OFFSET,
-  });
+  const scrollOptions = useMemo(() => ({ target: sectionRef, offset: HERO_SCROLL_OFFSET }), []);
+  const { scrollYProgress } = useScroll(scrollOptions);
 
   useEffect(() => {
-    return scrollYProgress.on("change", (v) => {
-      progressRef.current = v;
-    });
+    return scrollYProgress.on("change", (v) => { progressRef.current = v; });
   }, [scrollYProgress]);
 
   return (
@@ -54,19 +48,13 @@ const Hero = () => {
         <ComputersCanvas />
       </Suspense>
 
-      <div className='absolute xs:bottom-10 bottom-32 w-full flex justify-center items-center'>
-        <a href='#about'>
-          <div className='w-[35px] h-[64px] rounded-3xl border-4 border-brand-text-muted/60 flex justify-center items-start p-2'>
+      <div className="absolute xs:bottom-10 bottom-32 w-full flex justify-center items-center">
+        <a href="#about" aria-label="Scroll to about section">
+          <div className="w-[35px] h-[64px] rounded-3xl border-4 border-brand-text-muted/60 flex justify-center items-start p-2">
             <motion.div
-              animate={{
-                y: [0, 24, 0],
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                repeatType: "loop",
-              }}
-              className='w-3 h-3 rounded-full bg-brand-text-muted mb-1'
+              animate={{ y: [0, 24, 0] }}
+              transition={MOUSE_SCROLL_TRANSITION}
+              className="w-3 h-3 rounded-full bg-brand-text-muted mb-1"
             />
           </div>
         </a>
@@ -74,6 +62,6 @@ const Hero = () => {
     </section>
     </HeroScrollProvider>
   );
-};
+});
 
 export default Hero;

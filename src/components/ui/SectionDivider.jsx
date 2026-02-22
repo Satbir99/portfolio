@@ -1,10 +1,10 @@
-import React, { useRef } from "react";
+import React, { useRef, memo } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 /**
  * Scroll-reactive divider between sections. The line "draws" in as you scroll into view (Lenis + useScroll).
  */
-export function SectionDivider() {
+export const SectionDivider = memo(function SectionDivider() {
   const ref = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -32,4 +32,4 @@ export function SectionDivider() {
       />
     </div>
   );
-}
+});

@@ -76,45 +76,58 @@ const Contact = () => {
         <form
           ref={formRef}
           onSubmit={handleSubmit}
-          className='mt-12 flex flex-col gap-8'
+          className="mt-12 flex flex-col gap-8"
+          noValidate
+          aria-label="Contact form"
         >
-          <label className='flex flex-col'>
-            <span className='text-brand-text font-medium mb-4'>Your Name</span>
+          <label htmlFor="contact-name" className="flex flex-col">
+            <span className="text-brand-text font-medium mb-4">Your Name</span>
             <input
-              type='text'
-              name='name'
+              id="contact-name"
+              type="text"
+              name="name"
               value={form.name}
               onChange={handleChange}
               placeholder="What's your good name?"
-              className='bg-brand-surface dark:bg-tertiary py-4 px-6 placeholder:text-brand-text-muted text-brand-text rounded-lg outline-none border border-brand-border font-medium transition-colors duration-200'
+              autoComplete="name"
+              className="bg-brand-surface dark:bg-tertiary py-4 px-6 placeholder:text-brand-text-muted text-brand-text rounded-lg outline-none border border-brand-border font-medium transition-colors duration-200"
+              aria-required="true"
             />
           </label>
-          <label className='flex flex-col'>
-            <span className='text-brand-text font-medium mb-4'>Your email</span>
+          <label htmlFor="contact-email" className="flex flex-col">
+            <span className="text-brand-text font-medium mb-4">Your email</span>
             <input
-              type='email'
-              name='email'
+              id="contact-email"
+              type="email"
+              name="email"
               value={form.email}
               onChange={handleChange}
               placeholder="What's your web address?"
-              className='bg-brand-surface dark:bg-tertiary py-4 px-6 placeholder:text-brand-text-muted text-brand-text rounded-lg outline-none border border-brand-border font-medium transition-colors duration-200'
+              autoComplete="email"
+              className="bg-brand-surface dark:bg-tertiary py-4 px-6 placeholder:text-brand-text-muted text-brand-text rounded-lg outline-none border border-brand-border font-medium transition-colors duration-200"
+              aria-required="true"
             />
           </label>
-          <label className='flex flex-col'>
-            <span className='text-brand-text font-medium mb-4'>Your Message</span>
+          <label htmlFor="contact-message" className="flex flex-col">
+            <span className="text-brand-text font-medium mb-4">Your Message</span>
             <textarea
+              id="contact-message"
               rows={7}
-              name='message'
+              name="message"
               value={form.message}
               onChange={handleChange}
-              placeholder='What you want to say?'
-              className='bg-brand-surface dark:bg-tertiary py-4 px-6 placeholder:text-brand-text-muted text-brand-text rounded-lg outline-none border border-brand-border font-medium transition-colors duration-200 resize-none'
+              placeholder="What you want to say?"
+              className="bg-brand-surface dark:bg-tertiary py-4 px-6 placeholder:text-brand-text-muted text-brand-text rounded-lg outline-none border border-brand-border font-medium transition-colors duration-200 resize-none"
+              aria-required="true"
             />
           </label>
 
           <button
-            type='submit'
-            className='bg-brand-text dark:bg-tertiary text-brand-bg dark:text-white py-3 px-8 rounded-xl outline-none w-fit font-bold shadow-lg hover:opacity-90 transition-opacity duration-200'
+            type="submit"
+            className="bg-brand-text dark:bg-tertiary text-brand-bg dark:text-white py-3 px-8 rounded-xl outline-none w-fit font-bold shadow-lg hover:opacity-90 transition-opacity duration-200"
+            disabled={loading}
+            aria-busy={loading}
+            aria-live="polite"
           >
             {loading ? "Sending..." : "Send"}
           </button>

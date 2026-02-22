@@ -11,18 +11,11 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          if (id.includes("node_modules/react/") || id.includes("node_modules/react-dom/")) {
-            return "react-vendor";
-          }
-          if (id.includes("node_modules/framer-motion")) {
-            return "framer-motion";
-          }
-          if (id.includes("node_modules/three") || id.includes("node_modules/@react-three")) {
-            return "three";
-          }
-          if (id.includes("node_modules/lenis")) {
-            return "lenis";
-          }
+          if (id.includes("node_modules/react/") || id.includes("node_modules/react-dom/")) return "react-vendor";
+          if (id.includes("node_modules/framer-motion")) return "framer-motion";
+          if (id.includes("node_modules/three") || id.includes("node_modules/@react-three")) return "three";
+          if (id.includes("node_modules/lenis")) return "lenis";
+          if (id.includes("node_modules/@emailjs")) return "emailjs";
         },
         chunkFileNames: "assets/[name]-[hash].js",
         entryFileNames: "assets/[name]-[hash].js",
