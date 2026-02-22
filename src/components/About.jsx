@@ -47,7 +47,7 @@ const About = () => {
        I am a Senior Software Engineer with 4 years of experience specializing in React, TypeScript, and Micro-frontend architectures. I thrive in startup environments, where I build high-performance interfaces that are both visually stunning and technically robust. Beyond the frontend, I architect scalable backends using FastAPI and MongoDB to deliver end-to-end products that drive user engagement and business growth.
       </motion.p>
 
-      <div className='mt-20 flex flex-wrap gap-10'>
+      <div className='mt-12 sm:mt-20 flex flex-wrap justify-center gap-6 sm:gap-10'>
         {services.map((service, index) => (
           <ServiceCard key={service.title} index={index} {...service} />
         ))}

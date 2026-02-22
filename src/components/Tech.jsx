@@ -7,7 +7,7 @@ const ICON_SIZE = 112; /* 28 * 4 = 112px (w-28 h-28) for stable layout */
 
 const Tech = () => {
   return (
-    <div className='flex flex-row flex-wrap justify-center gap-10'>
+    <div className='flex flex-row flex-wrap justify-center gap-6 sm:gap-8 md:gap-10'>
       {technologies.map((technology) => (
         <div
           className='skill-icon-wrap w-28 h-28 flex items-center justify-center rounded-xl bg-brand-surface dark:bg-tertiary/50 border border-brand-border/50 dark:border-transparent shadow-premium dark:shadow-none transition-all duration-300'
