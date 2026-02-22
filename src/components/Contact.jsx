@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
 
@@ -11,33 +11,23 @@ const SERVICE_ID = import.meta.env.VITE_APP_EMAILJS_SERVICE_ID;
 const TEMPLATE_ID = import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID;
 const PUBLIC_KEY = import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY;
 
+const INITIAL_FORM = { name: "", email: "", message: "" };
+
 const Contact = () => {
   const formRef = useRef();
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
+  const [form, setForm] = useState(INITIAL_FORM);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (PUBLIC_KEY) {
-      emailjs.init(PUBLIC_KEY);
-    }
+    if (PUBLIC_KEY) emailjs.init(PUBLIC_KEY);
   }, []);
 
-  const handleChange = (e) => {
-    const { target } = e;
-    const { name, value } = target;
+  const handleChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  }, []);
 
-    setForm({
-      ...form,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = useCallback((e) => {
     e.preventDefault();
 
     if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
@@ -61,7 +51,7 @@ const Contact = () => {
         () => {
           setLoading(false);
           alert("Thank you. I will get back to you as soon as possible.");
-          setForm({ name: "", email: "", message: "" });
+          setForm(INITIAL_FORM);
         },
         (error) => {
           setLoading(false);
@@ -70,15 +60,15 @@ const Contact = () => {
           alert(`Something went wrong: ${message}. Check the browser console and your EmailJS template variable names (from_name, from_email, message).`);
         }
       );
-  };
+  }, [form]);
 
   return (
     <div
-      className={`xl:mt-12 flex xl:flex-row flex-col-reverse gap-10 overflow-hidden`}
+      className="xl:mt-12 flex xl:flex-row flex-col-reverse gap-0 overflow-hidden"
     >
       <motion.div
         variants={slideIn("left", "tween", 0.2, 1)}
-        className='flex-[0.75] bg-black-100 p-8 rounded-2xl'
+        className="flex-[0.75] glass p-8 rounded-2xl border xl:mr-0 shrink-0 shadow-premium-lg dark:shadow-none"
       >
         <p className={styles.sectionSubText}>Get in touch</p>
         <h3 className={styles.sectionHeadText}>Contact.</h3>
@@ -89,51 +79,57 @@ const Contact = () => {
           className='mt-12 flex flex-col gap-8'
         >
           <label className='flex flex-col'>
-            <span className='text-white font-medium mb-4'>Your Name</span>
+            <span className='text-brand-text font-medium mb-4'>Your Name</span>
             <input
               type='text'
               name='name'
               value={form.name}
               onChange={handleChange}
               placeholder="What's your good name?"
-              className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
+              className='bg-brand-surface dark:bg-tertiary py-4 px-6 placeholder:text-brand-text-muted text-brand-text rounded-lg outline-none border border-brand-border font-medium transition-colors duration-200'
             />
           </label>
           <label className='flex flex-col'>
-            <span className='text-white font-medium mb-4'>Your email</span>
+            <span className='text-brand-text font-medium mb-4'>Your email</span>
             <input
               type='email'
               name='email'
               value={form.email}
               onChange={handleChange}
               placeholder="What's your web address?"
-              className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
+              className='bg-brand-surface dark:bg-tertiary py-4 px-6 placeholder:text-brand-text-muted text-brand-text rounded-lg outline-none border border-brand-border font-medium transition-colors duration-200'
             />
           </label>
           <label className='flex flex-col'>
-            <span className='text-white font-medium mb-4'>Your Message</span>
+            <span className='text-brand-text font-medium mb-4'>Your Message</span>
             <textarea
               rows={7}
               name='message'
               value={form.message}
               onChange={handleChange}
               placeholder='What you want to say?'
-              className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
+              className='bg-brand-surface dark:bg-tertiary py-4 px-6 placeholder:text-brand-text-muted text-brand-text rounded-lg outline-none border border-brand-border font-medium transition-colors duration-200 resize-none'
             />
           </label>
 
           <button
             type='submit'
-            className='bg-tertiary py-3 px-8 rounded-xl outline-none w-fit text-white font-bold shadow-md shadow-primary'
+            className='bg-brand-text dark:bg-tertiary text-brand-bg dark:text-white py-3 px-8 rounded-xl outline-none w-fit font-bold shadow-lg hover:opacity-90 transition-opacity duration-200'
           >
             {loading ? "Sending..." : "Send"}
           </button>
         </form>
       </motion.div>
 
+      {/* Solid strip to mask canvas bleed */}
+      <div
+        className="hidden xl:block w-4 flex-shrink-0 bg-brand-bg min-h-[400px]"
+        aria-hidden="true"
+      />
+
       <motion.div
         variants={slideIn("right", "tween", 0.2, 1)}
-        className='xl:flex-1 xl:h-auto md:h-[550px] h-[350px]'
+        className="xl:flex-1 xl:h-auto md:h-[550px] h-[350px] overflow-hidden rounded-2xl bg-brand-surface dark:bg-primary border border-brand-border dark:border-transparent shadow-premium dark:shadow-none shrink-0"
       >
         <EarthCanvas />
       </motion.div>

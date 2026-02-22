@@ -21,10 +21,6 @@ import tailwind from "./tech/tailwind.png";
 import typescript from "./tech/typescript.png";
 import threejs from "./tech/threejs.svg";
 
-import meta from "./company/meta.png";
-import shopify from "./company/shopify.png";
-import starbucks from "./company/starbucks.png";
-import tesla from "./company/tesla.png";
 import trumio from "./company/trumio.webp";
 import innovaccer from "./company/innovaccer.webp";
 import tigerAnalytics from "./company/tigerAnalytics.webp";
@@ -33,10 +29,6 @@ import scalerAcademy from "./company/scalerAcademy.webp";
 import unacademy from "./company/unacademy.webp";
 import tataSteel from "./company/tataSteel.webp";
 import tataTechnologies from "./company/tataTechnologies.webp";
-
-import carrent from "./carrent.png";
-import jobit from "./jobit.png";
-import tripguide from "./tripguide.png";
 
 import glimpseGit from "./project/glimpseGit.png";
 import frp from "./project/frp.png";
@@ -64,13 +56,6 @@ export {
   tailwind,
   typescript,
   threejs,
-  meta,
-  shopify,
-  starbucks,
-  tesla,
-  carrent,
-  jobit,
-  tripguide,
   glimpseGit,
   frp,
   todo,

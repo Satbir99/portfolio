@@ -31,17 +31,17 @@ const BlogCard = ({ index, title, tag, description, link }) => (
     variants={fadeIn("up", "spring", index * 0.5, 0.75)}
     className="block xs:w-[320px] w-full"
   >
-    <div className="bg-black-200 p-8 rounded-2xl h-full border border-dashed border-secondary/30 hover:border-[#56ccf2]/50 transition-colors">
-      <p className="text-white font-black text-[40px] leading-none">"</p>
-      <p className="mt-4 text-white text-[15px] leading-relaxed tracking-wide">
+    <div className="bg-brand-surface dark:bg-black-200 p-8 rounded-2xl h-full border border-dashed border-brand-border dark:border-secondary/30 hover:border-[#56ccf2]/50 shadow-premium dark:shadow-none transition-all duration-300">
+      <p className="text-brand-text font-black text-[40px] leading-none">"</p>
+      <p className="mt-4 text-brand-text text-[15px] leading-relaxed tracking-wide">
         {description}
       </p>
       <div className="mt-6 flex justify-between items-start gap-3">
         <div className="flex-1 min-w-0">
           <p className="text-[#56ccf2] text-[14px] font-medium">@{tag}</p>
-          <p className="mt-1 text-white font-semibold text-[16px]">{title}</p>
+          <p className="mt-1 text-brand-text font-semibold text-[16px]">{title}</p>
         </div>
-        <span className="flex-shrink-0 p-2 rounded-lg bg-tertiary">
+        <span className="flex-shrink-0 p-2 rounded-lg bg-brand-surface-elevated dark:bg-tertiary">
           <LinkIcon />
         </span>
       </div>
@@ -51,9 +51,9 @@ const BlogCard = ({ index, title, tag, description, link }) => (
 
 const Blogs = () => {
   return (
-    <div className={`mt-12 bg-black-100 rounded-[20px]`}>
+    <div className="mt-12 bg-brand-surface-elevated dark:bg-black-100 rounded-[20px] border border-brand-border/50 dark:border-transparent shadow-premium dark:shadow-none transition-all duration-300">
       <div
-        className={`bg-tertiary rounded-2xl ${styles.padding} min-h-[140px] flex flex-col justify-center`}
+        className={`bg-brand-surface dark:bg-tertiary rounded-2xl border-b border-brand-border/50 dark:border-transparent rounded-b-none rounded-t-[20px] ${styles.padding} min-h-[140px] flex flex-col justify-center`}
       >
         <motion.div variants={textVariant()} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.25 }}>
           <p className={styles.sectionSubText}>What I write</p>

@@ -5,6 +5,7 @@ import About from "./About";
 import Tech from "./Tech";
 import Experience from "./Experience";
 import Works from "./Works";
+import WorksHorizontal from "./WorksHorizontal";
 import Blogs from "./Blogs";
 import Contact from "./Contact";
 import CanvasLoader from "./Loader";
@@ -17,11 +18,12 @@ export {
   Tech,
   Experience,
   Works,
+  WorksHorizontal,
   Blogs,
   Contact,
   CanvasLoader,
-  EarthCanvas, 
-  BallCanvas, 
-  ComputersCanvas, 
+  EarthCanvas,
+  BallCanvas,
+  ComputersCanvas,
   StarsCanvas
 };

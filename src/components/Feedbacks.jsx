@@ -16,19 +16,19 @@ const FeedbackCard = ({
 }) => (
   <motion.div
     variants={fadeIn("", "spring", index * 0.5, 0.75)}
-    className='bg-black-200 p-10 rounded-3xl xs:w-[320px] w-full'
+    className='bg-brand-surface dark:bg-black-200 p-10 rounded-3xl xs:w-[320px] w-full border border-brand-border/50 dark:border-transparent shadow-premium dark:shadow-none transition-all duration-300'
   >
-    <p className='text-white font-black text-[48px]'>"</p>
+    <p className='text-brand-text font-black text-[48px]'>"</p>
 
     <div className='mt-1'>
-      <p className='text-white tracking-wider text-[18px]'>{testimonial}</p>
+      <p className='text-brand-text tracking-wider text-[18px]'>{testimonial}</p>
 
       <div className='mt-7 flex justify-between items-center gap-1'>
         <div className='flex-1 flex flex-col'>
-          <p className='text-white font-medium text-[16px]'>
+          <p className='text-brand-text font-medium text-[16px]'>
             <span className='blue-text-gradient'>@</span> {name}
           </p>
-          <p className='mt-1 text-secondary text-[12px]'>
+          <p className='mt-1 text-brand-text-muted text-[12px]'>
             {designation} of {company}
           </p>
         </div>
@@ -45,9 +45,9 @@ const FeedbackCard = ({
 
 const Feedbacks = () => {
   return (
-    <div className={`mt-12 bg-black-100 rounded-[20px]`}>
+    <div className="mt-12 bg-brand-surface-elevated dark:bg-black-100 rounded-[20px] border border-brand-border/50 dark:border-transparent shadow-premium dark:shadow-none transition-all duration-300">
       <div
-        className={`bg-tertiary rounded-2xl ${styles.padding} min-h-[300px]`}
+        className={`bg-brand-surface dark:bg-tertiary rounded-2xl rounded-b-none rounded-t-[20px] border-b border-brand-border/50 dark:border-transparent ${styles.padding} min-h-[300px]`}
       >
         <motion.div variants={textVariant()}>
           <p className={styles.sectionSubText}>What others say</p>

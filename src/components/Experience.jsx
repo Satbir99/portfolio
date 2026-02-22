@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -12,41 +12,47 @@ import { experiences } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { textVariant } from "../utils/motion";
 
-const ExperienceCard = ({ experience }) => {
+const CONTENT_STYLE = { background: "var(--timeline-content-bg)", color: "var(--brand-text)" };
+const CONTENT_ARROW_STYLE = { borderRight: "7px solid var(--timeline-content-arrow)" };
+
+const ExperienceCard = React.memo(function ExperienceCard({ experience }) {
+  const iconStyle = useMemo(
+    () => ({ background: "var(--timeline-icon-bg)" }),
+    []
+  );
+
   return (
     <VerticalTimelineElement
-      contentStyle={{
-        background: "#1d1836",
-        color: "#fff",
-      }}
-      contentArrowStyle={{ borderRight: "7px solid  #232631" }}
+      contentStyle={CONTENT_STYLE}
+      contentArrowStyle={CONTENT_ARROW_STYLE}
       date={experience.date}
-      iconStyle={{ background: experience.iconBg }}
+      iconStyle={iconStyle}
       icon={
-        <div className='flex justify-center items-center w-full h-full'>
+        <div className="flex justify-center items-center w-full h-full">
           <img
             src={experience.icon}
             alt={experience.company_name}
-            className='w-[60%] h-[60%] object-contain'
+            className="w-[60%] h-[60%] object-contain"
+            loading="lazy"
           />
         </div>
       }
     >
       <div>
-        <h3 className='text-white text-[24px] font-bold'>{experience.title}</h3>
+        <h3 className="text-brand-text text-[24px] font-bold">{experience.title}</h3>
         <p
-          className='text-secondary text-[16px] font-semibold'
+          className="text-brand-text-muted text-[16px] font-semibold"
           style={{ margin: 0 }}
         >
           {experience.company_name}
         </p>
       </div>
 
-      <ul className='mt-5 list-disc ml-5 space-y-2'>
+      <ul className="mt-5 list-disc ml-5 space-y-2">
         {experience.points.map((point, index) => (
           <li
-            key={`experience-point-${index}`}
-            className='text-white-100 text-[14px] pl-1 tracking-wider'
+            key={`${experience.company_name}-${index}`}
+            className="text-brand-text-muted text-[14px] pl-1 tracking-wider"
           >
             {point}
           </li>
@@ -54,17 +60,12 @@ const ExperienceCard = ({ experience }) => {
       </ul>
     </VerticalTimelineElement>
   );
-};
+});
 
 const Experience = () => {
   return (
     <>
-      <motion.div
-        variants={textVariant()}
-        initial='hidden'
-        whileInView='show'
-        viewport={{ once: true, amount: 0.25 }}
-      >
+      <motion.div variants={textVariant()}>
         <p className={`${styles.sectionSubText} text-center`}>
           What I have done so far
         </p>
@@ -73,11 +74,11 @@ const Experience = () => {
         </h2>
       </motion.div>
 
-      <div className='mt-20 flex flex-col'>
+      <div className="mt-20 flex flex-col">
         <VerticalTimeline>
-          {experiences.map((experience, index) => (
+          {experiences.map((experience) => (
             <ExperienceCard
-              key={`experience-${index}`}
+              key={`${experience.company_name}-${experience.date}`}
               experience={experience}
             />
           ))}

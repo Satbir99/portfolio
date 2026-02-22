@@ -1,8 +1,19 @@
-import React, { Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
+import React, { Suspense, useEffect } from "react";
+import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
+import * as THREE from "three";
 
 import CanvasLoader from "../Loader";
+import { useThemeColors } from "../../hooks/useThemeColors";
+
+function SceneBgSync() {
+  const { scene } = useThree();
+  const { background } = useThemeColors();
+  useEffect(() => {
+    scene.background = new THREE.Color(background);
+  }, [scene, background]);
+  return null;
+}
 
 const Earth = () => {
   const earth = useGLTF("./planet/scene.gltf");
@@ -26,6 +37,7 @@ const EarthCanvas = () => {
         position: [-4, 3, 6],
       }}
     >
+      <SceneBgSync />
       <Suspense fallback={<CanvasLoader />}>
         <OrbitControls
           autoRotate

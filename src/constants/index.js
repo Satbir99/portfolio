@@ -22,9 +22,6 @@ import {
   unacademy,
   tataSteel,
   tataTechnologies,
-  carrent,
-  jobit,
-  tripguide,
   glimpseGit,
   frp,
   todo,
@@ -38,6 +35,10 @@ export const navLinks = [
   {
     id: "work",
     title: "Work",
+  },
+  {
+    id: "projects",
+    title: "Projects",
   },
   {
     id: "skills",

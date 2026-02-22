@@ -1,16 +1,227 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
-
+/* Font loaded async via index.html link (display=swap) for better LCP */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --glow-x: 0.5;
+  --glow-y: 0.5;
+  --cursor-x: 0;
+  --cursor-y: 0;
+  --accent-blue: 86 204 242;
+  --accent-purple: 128 77 238;
+  --navbar-height: 4.75rem; /* matches Navbar (py-5 + content) for sticky sections */
+
+  /* Semantic theme (light) – premium, refined neutrals */
+  --brand-bg: #fafafa;
+  --brand-surface: #ffffff;
+  --brand-surface-elevated: #f5f5f5;
+  --brand-text: #0a0a0a;
+  --brand-text-muted: #52525b;
+  --brand-border: rgba(0, 0, 0, 0.06);
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(0, 0, 0, 0.05);
+
+  /* Premium shadows (light only) */
+  --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-elevated: 0 8px 30px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-nav: 0 1px 0 rgba(0, 0, 0, 0.06);
+
+  /* Timeline (light) */
+  --line-color: #e4e4e7;
+  --timeline-content-bg: #ffffff;
+  --timeline-content-arrow: #ffffff;
+  --timeline-content-bottom-border: rgba(0, 0, 0, 0.08);
+  --timeline-icon-bg: #ffffff;
+  --timeline-icon-ring: rgba(0, 0, 0, 0.12);
+}
+
+/* Hero: premium gradient overlay (light = soft lift, dark = depth) */
+.hero-overlay {
+  background: linear-gradient(180deg, rgba(250, 250, 250, 0.92) 0%, rgba(250, 250, 250, 0.5) 45%, transparent 100%);
+  transition: background 0.4s ease;
+}
+.dark .hero-overlay {
+  background: linear-gradient(180deg, rgba(5, 8, 22, 0.6) 0%, rgba(5, 8, 22, 0.3) 50%, transparent 100%);
+}
+
+.dark {
+  --brand-bg: #050816;
+  --brand-surface: #151030;
+  --brand-surface-elevated: #100d25;
+  --brand-text: #f3f3f3;
+  --brand-text-muted: #aaa6c3;
+  --brand-border: rgba(255, 255, 255, 0.08);
+  --glass-bg: rgba(21, 16, 48, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.08);
+
+  /* Timeline (dark) */
+  --line-color: rgba(255, 255, 255, 0.15);
+  --timeline-content-bg: #1d1836;
+  --timeline-content-arrow: #232631;
+  --timeline-content-bottom-border: rgba(255, 255, 255, 0.06);
+  --timeline-icon-bg: #ffffff;
+  --timeline-icon-ring: rgba(255, 255, 255, 0.12);
+}
+
+html.custom-cursor-active,
+html.custom-cursor-active body {
+  cursor: none;
+}
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", system-ui, -apple-system, sans-serif;
   scroll-behavior: smooth;
-  color-scheme: dark;
+}
+
+html { color-scheme: light; }
+html.dark { color-scheme: dark; }
+
+/* Fluid theme transition on background and text */
+body {
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Visible focus for keyboard users (a11y) */
+:focus-visible {
+  outline: 2px solid rgba(86, 204, 242, 0.8);
+  outline-offset: 2px;
+}
+
+/* Glassmorphism: theme-aware border and background tint */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+
+/* Frosted glass: blur(20px) + noise overlay (futuristic minimalist) */
+.glass-frosted {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+.glass-frosted::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+/* Vertical timeline: theme-aware line, content, arrow, icon */
+.vertical-timeline::before {
+  background: var(--line-color) !important;
+  transition: background 0.4s ease;
+}
+.vertical-timeline-element-content {
+  background: var(--timeline-content-bg) !important;
+  color: var(--brand-text) !important;
+  box-shadow: 0 1px 0 var(--timeline-content-bottom-border), var(--shadow-card, 0 2px 8px rgba(0,0,0,0.06)) !important;
+  transition: background-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+}
+.dark .vertical-timeline-element-content {
+  box-shadow: 0 3px 0 var(--timeline-content-bottom-border) !important;
+}
+.vertical-timeline-element-content h2,
+.vertical-timeline-element-content .vertical-timeline-element-title {
+  color: var(--brand-text) !important;
+}
+.vertical-timeline-element-content .vertical-timeline-element-date,
+.vertical-timeline-element-content p {
+  color: var(--brand-text-muted) !important;
+}
+.vertical-timeline-element-content-arrow {
+  border-right-color: var(--timeline-content-arrow) !important;
+  transition: border-color 0.4s ease;
+}
+.vertical-timeline--one-column-right .vertical-timeline-element-content-arrow {
+  border-left-color: var(--timeline-content-arrow) !important;
+}
+.vertical-timeline-element-icon {
+  background: var(--timeline-icon-bg) !important;
+  box-shadow: 0 0 0 4px var(--timeline-icon-ring), inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(0, 0, 0, 0.05) !important;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Section dividers: refined in light, vivid in dark */
+.section-divider-line {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(86, 204, 242, 0.2) 20%,
+    rgba(128, 77, 238, 0.35) 50%,
+    rgba(86, 204, 242, 0.2) 80%,
+    transparent 100%
+  );
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+.dark .section-divider-line {
+  box-shadow: 0 0 20px rgba(86, 204, 242, 0.2);
+}
+.section-divider-dot {
+  box-shadow: 0 0 8px rgba(86, 204, 242, 0.25);
+  transition: box-shadow 0.4s ease;
+}
+.dark .section-divider-dot {
+  box-shadow: 0 0 12px rgba(86, 204, 242, 0.5);
+}
+
+/* Glow-follow: use with useGlowFollow(ref). Set --glow-x/--glow-y via JS. */
+.glow-follow {
+  --glow-x: 0.5;
+  --glow-y: 0.5;
+  position: relative;
+}
+.glow-follow::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(
+    600px circle at calc(var(--glow-x) * 100%) calc(var(--glow-y) * 100%),
+    rgba(var(--accent-blue, 86 204 242), 0.15),
+    transparent 40%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Skip link: visible on focus for a11y, off-screen otherwise */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--tw-color-accent-blue, #56ccf2);
+  color: #050816;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 1rem;
+  outline: 2px solid var(--brand-text);
+  outline-offset: 2px;
 }
 
 .hash-span {

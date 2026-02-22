@@ -4,7 +4,31 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Adrian | JavaScript Mastery Portfolio</title>
+    <meta name="theme-color" content="#050816" />
+    <meta name="description" content="Satbir Singh - Senior Software Engineer portfolio. React, TypeScript, and full-stack development. View projects, experience, and get in touch." />
+    <title>Satbir Singh | Portfolio - Software Engineer</title>
+    <!-- Preconnect for faster font load; display=swap avoids invisible text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+    />
+    <!-- Blocking: apply theme before first paint to avoid FOUC -->
+    <script>
+      (function () {
+        var key = "portfolio-theme";
+        var stored = localStorage.getItem(key);
+        var dark =
+          stored === "dark"
+            ? true
+            : stored === "light"
+            ? false
+            : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (dark) document.documentElement.classList.add("dark");
+        else document.documentElement.classList.remove("dark");
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

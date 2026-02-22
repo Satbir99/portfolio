@@ -10,7 +10,7 @@ const Tech = () => {
     <div className='flex flex-row flex-wrap justify-center gap-10'>
       {technologies.map((technology) => (
         <div
-          className='skill-icon-wrap w-28 h-28 flex items-center justify-center rounded-xl bg-tertiary/50'
+          className='skill-icon-wrap w-28 h-28 flex items-center justify-center rounded-xl bg-brand-surface dark:bg-tertiary/50 border border-brand-border/50 dark:border-transparent shadow-premium dark:shadow-none transition-all duration-300'
           key={technology.name}
         >
           <img

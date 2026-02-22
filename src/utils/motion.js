@@ -1,17 +1,21 @@
+/** Stable default for sections that don't pass a delay (avoids new object every render). */
+const TEXT_VARIANT_DEFAULT = {
+  hidden: { y: -50, opacity: 0 },
+  show: {
+    y: 0,
+    opacity: 1,
+    transition: { type: "spring", duration: 1.25 },
+  },
+};
+
 export const textVariant = (delay) => {
+  if (delay == null) return TEXT_VARIANT_DEFAULT;
   return {
-    hidden: {
-      y: -50,
-      opacity: 0,
-    },
+    hidden: { y: -50, opacity: 0 },
     show: {
       y: 0,
       opacity: 1,
-      transition: {
-        type: "spring",
-        duration: 1.25,
-        delay: delay,
-      },
+      transition: { type: "spring", duration: 1.25, delay },
     },
   };
 };
