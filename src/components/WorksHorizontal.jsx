@@ -75,27 +75,29 @@ const ProjectCard = React.memo(function ProjectCard({
             yEnd="-10%"
             offset={PARALLAX_OFFSET}
           />
-          <div className="absolute inset-0 flex justify-end gap-2 m-3 card-img_hover">
+          <div className="absolute inset-0 z-10 flex justify-end items-start gap-2 p-3 bg-gradient-to-t from-black/50 to-transparent rounded-xl opacity-100">
             {live_preview_link && (
               <button
                 type="button"
                 onClick={() => openLink(live_preview_link)}
-                className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer border-0"
+                className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer border-0 shrink-0 hover:opacity-90"
                 title="Live Preview"
                 aria-label="Open live preview"
               >
                 <ExternalLinkIcon />
               </button>
             )}
-            <button
-              type="button"
-              onClick={() => openLink(source_code_link)}
-              className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer border-0"
-              title="Source Code"
-              aria-label="Open source code"
-            >
-              <img src={github} alt="" className="w-1/2 h-1/2 object-contain" />
-            </button>
+            {source_code_link && (
+              <button
+                type="button"
+                onClick={() => openLink(source_code_link)}
+                className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer border-0 shrink-0 hover:opacity-90"
+                title="Source Code"
+                aria-label="Open source code on GitHub"
+              >
+                <img src={github} alt="" className="w-5 h-5 object-contain" />
+              </button>
+            )}
           </div>
         </div>
         <div className="mt-5">
