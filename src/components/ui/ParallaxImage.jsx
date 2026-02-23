@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { ProgressiveImage } from "./ProgressiveImage";
 
 const SPRING = { stiffness: 100, damping: 30 };
 
@@ -50,10 +51,11 @@ export function ParallaxImage({
           willChange: "transform",
         }}
       >
-        <img
+        <ProgressiveImage
           src={src}
           alt={alt}
           className="w-full h-full object-cover"
+          wrapperClassName="w-full h-full"
           loading="lazy"
           decoding="async"
         />

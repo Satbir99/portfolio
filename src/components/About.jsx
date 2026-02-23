@@ -1,34 +1,33 @@
 import React from "react";
-import Tilt from "react-tilt";
 import { motion } from "framer-motion";
 
 import { styles } from "../styles";
 import { services } from "../constants";
 import { SectionWrapper } from "../hoc";
+import { ProgressiveImageIcon, TiltCard } from "./ui";
 import { fadeIn, textVariant } from "../utils/motion";
 
-const TILT_OPTIONS = { max: 45, scale: 1, speed: 450 };
+const TILT_OPTIONS = { max: 45, scale: 1 };
 
 const ServiceCard = React.memo(function ServiceCard({ index, title, icon }) {
   return (
-    <Tilt className="xs:w-[250px] w-full" options={TILT_OPTIONS}>
+    <TiltCard className="xs:w-[250px] w-full" options={TILT_OPTIONS}>
       <motion.div
         variants={fadeIn("right", "spring", index * 0.5, 0.75)}
         className="w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card"
       >
-        <div className="bg-brand-surface dark:bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col border border-brand-border/50 dark:border-transparent shadow-premium dark:shadow-none transition-all duration-300">
-          <img
+        <div className="bg-brand-surface dark:bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col border border-brand-border/50 dark:border-transparent shadow-premium dark:shadow-none transition-composited">
+          <ProgressiveImageIcon
             src={icon}
             alt={title}
             className="w-16 h-16 object-contain"
-            loading="lazy"
           />
           <h3 className="text-brand-text text-[20px] font-bold text-center">
             {title}
           </h3>
         </div>
       </motion.div>
-    </Tilt>
+    </TiltCard>
   );
 });
 

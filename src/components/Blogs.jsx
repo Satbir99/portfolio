@@ -31,7 +31,7 @@ const BlogCard = ({ index, title, tag, description, link }) => (
     variants={fadeIn("up", "spring", index * 0.5, 0.75)}
     className="block xs:w-[320px] w-full"
   >
-    <div className="bg-brand-surface dark:bg-black-200 p-8 rounded-2xl h-full border border-dashed border-brand-border dark:border-secondary/30 hover:border-[#56ccf2]/50 shadow-premium dark:shadow-none transition-all duration-300">
+    <div className="bg-brand-surface dark:bg-black-200 p-8 rounded-2xl h-full border border-dashed border-brand-border dark:border-secondary/30 hover:border-[#56ccf2]/50 shadow-premium dark:shadow-none transition-composited">
       <p className="text-brand-text font-black text-[40px] leading-none">"</p>
       <p className="mt-4 text-brand-text text-[15px] leading-relaxed tracking-wide">
         {description}
@@ -51,7 +51,7 @@ const BlogCard = ({ index, title, tag, description, link }) => (
 
 const Blogs = () => {
   return (
-    <div className="mt-12 bg-brand-surface-elevated dark:bg-black-100 rounded-[20px] border border-brand-border/50 dark:border-transparent shadow-premium dark:shadow-none transition-all duration-300">
+    <div className="mt-12 bg-brand-surface-elevated dark:bg-black-100 rounded-[20px] border border-brand-border/50 dark:border-transparent shadow-premium dark:shadow-none transition-composited">
       <div
         className={`bg-brand-surface dark:bg-tertiary rounded-2xl border-b border-brand-border/50 dark:border-transparent rounded-b-none rounded-t-[20px] ${styles.padding} min-h-[140px] flex flex-col justify-center`}
       >
@@ -71,8 +71,9 @@ const Blogs = () => {
           target="_blank"
           rel="noopener noreferrer"
           className="font-bold text-[#56ccf2] uppercase tracking-wider hover:underline focus:outline-none focus:underline"
+          aria-label="Read more articles by Satbir Singh on Scaler"
         >
-          Read more
+          Read more articles by Satbir Singh on Scaler
         </a>
       </div>
     </div>

@@ -1,15 +1,14 @@
 import React, { useCallback } from "react";
 import { motion, useTransform } from "framer-motion";
-import Tilt from "react-tilt";
 
 import { styles } from "../styles";
 import { github } from "../assets";
 import { SectionWrapper } from "../hoc";
 import { projects } from "../constants";
 import { useMagnetic, useLenisVelocitySkew } from "../hooks";
-import { HorizontalSection, SplitText, ParallaxImage } from "./ui";
+import { HorizontalSection, SplitText, ParallaxImage, TiltCard } from "./ui";
 
-const TILT_OPTIONS = { max: 12, scale: 1, speed: 400 };
+const TILT_OPTIONS = { max: 12, scale: 1 };
 const PARALLAX_OFFSET = ["start end", "end start"];
 const DESCRIPTION_LINE_CLAMP = {
   display: "-webkit-box",
@@ -65,7 +64,7 @@ const ProjectCard = React.memo(function ProjectCard({
       }}
       className="flex-shrink-0 w-[340px] sm:w-[360px]"
     >
-      <Tilt options={TILT_OPTIONS} className="glass-frosted p-5 rounded-2xl h-full">
+      <TiltCard options={TILT_OPTIONS} className="glass-frosted p-5 rounded-2xl h-full">
         <div className="relative w-full h-[220px] rounded-xl overflow-hidden">
           <ParallaxImage
             src={image}
@@ -115,7 +114,7 @@ const ProjectCard = React.memo(function ProjectCard({
             </p>
           ))}
         </div>
-      </Tilt>
+      </TiltCard>
     </motion.div>
   );
 });

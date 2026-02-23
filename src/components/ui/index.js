@@ -5,5 +5,7 @@ export { SectionDivider } from "./SectionDivider";
 export { HorizontalSection } from "./HorizontalSection";
 export { SplitText } from "./SplitText";
 export { ParallaxImage } from "./ParallaxImage";
+export { ProgressiveImage, ProgressiveImageIcon } from "./ProgressiveImage";
 export { SuspenseFallback } from "./SuspenseFallback";
 export { ThemeToggle } from "./ThemeToggle";
+export { TiltCard } from "./TiltCard";

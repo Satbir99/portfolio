@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 
 import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
+import { ProgressiveImageIcon } from "./ui";
 import { fadeIn, textVariant } from "../utils/motion";
 import { testimonials } from "../constants";
 
@@ -16,7 +17,7 @@ const FeedbackCard = ({
 }) => (
   <motion.div
     variants={fadeIn("", "spring", index * 0.5, 0.75)}
-    className='bg-brand-surface dark:bg-black-200 p-10 rounded-3xl xs:w-[320px] w-full border border-brand-border/50 dark:border-transparent shadow-premium dark:shadow-none transition-all duration-300'
+    className='bg-brand-surface dark:bg-black-200 p-10 rounded-3xl xs:w-[320px] w-full border border-brand-border/50 dark:border-transparent shadow-premium dark:shadow-none transition-composited'
   >
     <p className='text-brand-text font-black text-[48px]'>"</p>
 
@@ -33,11 +34,13 @@ const FeedbackCard = ({
           </p>
         </div>
 
-        <img
-          src={image}
-          alt={`feedback_by-${name}`}
-          className='w-10 h-10 rounded-full object-cover'
-        />
+        <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+          <ProgressiveImageIcon
+            src={image}
+            alt={`${name}`}
+            className="w-full h-full rounded-full object-cover"
+          />
+        </div>
       </div>
     </div>
   </motion.div>
@@ -45,7 +48,7 @@ const FeedbackCard = ({
 
 const Feedbacks = () => {
   return (
-    <div className="mt-12 bg-brand-surface-elevated dark:bg-black-100 rounded-[20px] border border-brand-border/50 dark:border-transparent shadow-premium dark:shadow-none transition-all duration-300">
+    <div className="mt-12 bg-brand-surface-elevated dark:bg-black-100 rounded-[20px] border border-brand-border/50 dark:border-transparent shadow-premium dark:shadow-none transition-composited">
       <div
         className={`bg-brand-surface dark:bg-tertiary rounded-2xl rounded-b-none rounded-t-[20px] border-b border-brand-border/50 dark:border-transparent ${styles.padding} min-h-[300px]`}
       >

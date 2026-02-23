@@ -95,7 +95,7 @@ const Navbar = memo(function Navbar() {
 
   return (
     <nav
-      className={`${styles.paddingX} w-full max-w-full min-w-0 left-0 right-0 flex items-center py-4 sm:py-5 fixed top-0 z-30 transition-all duration-300 border-b border-brand-border/50 dark:border-brand-border/40 bg-brand-bg dark:bg-brand-bg ${navClassName}`}
+      className={`${styles.paddingX} w-full max-w-full min-w-0 left-0 right-0 flex items-center py-4 sm:py-5 fixed top-0 z-30 transition-composited border-b border-brand-border/50 dark:border-brand-border/40 bg-brand-bg dark:bg-brand-bg ${navClassName}`}
       role="navigation"
       aria-label="Main"
     >
@@ -107,7 +107,7 @@ const Navbar = memo(function Navbar() {
             width={36}
             height={36}
             className="w-8 h-8 sm:w-9 sm:h-9 object-contain shrink-0"
-            fetchPriority="high"
+            fetchpriority="high"
             decoding="async"
           />
           <p className="text-brand-text text-[16px] sm:text-[18px] font-bold cursor-pointer flex truncate">

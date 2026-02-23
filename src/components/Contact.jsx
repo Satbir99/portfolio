@@ -1,11 +1,12 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { lazy, Suspense, useRef, useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
 
 import { styles } from "../styles";
-import { EarthCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { slideIn } from "../utils/motion";
+
+const EarthCanvas = lazy(() => import("./canvas/Earth"));
 
 const SERVICE_ID = import.meta.env.VITE_APP_EMAILJS_SERVICE_ID;
 const TEMPLATE_ID = import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID;
@@ -90,7 +91,7 @@ const Contact = () => {
               onChange={handleChange}
               placeholder="What's your good name?"
               autoComplete="name"
-              className="bg-brand-surface dark:bg-tertiary py-4 px-6 placeholder:text-brand-text-muted text-brand-text rounded-lg outline-none border border-brand-border font-medium transition-colors duration-200"
+              className="bg-brand-surface dark:bg-tertiary py-4 px-6 placeholder:text-brand-text-muted text-brand-text rounded-lg outline-none border border-brand-border font-medium transition-composited"
               aria-required="true"
             />
           </label>
@@ -104,7 +105,7 @@ const Contact = () => {
               onChange={handleChange}
               placeholder="What's your web address?"
               autoComplete="email"
-              className="bg-brand-surface dark:bg-tertiary py-4 px-6 placeholder:text-brand-text-muted text-brand-text rounded-lg outline-none border border-brand-border font-medium transition-colors duration-200"
+              className="bg-brand-surface dark:bg-tertiary py-4 px-6 placeholder:text-brand-text-muted text-brand-text rounded-lg outline-none border border-brand-border font-medium transition-composited"
               aria-required="true"
             />
           </label>
@@ -117,7 +118,7 @@ const Contact = () => {
               value={form.message}
               onChange={handleChange}
               placeholder="What you want to say?"
-              className="bg-brand-surface dark:bg-tertiary py-4 px-6 placeholder:text-brand-text-muted text-brand-text rounded-lg outline-none border border-brand-border font-medium transition-colors duration-200 resize-none"
+              className="bg-brand-surface dark:bg-tertiary py-4 px-6 placeholder:text-brand-text-muted text-brand-text rounded-lg outline-none border border-brand-border font-medium transition-composited resize-none"
               aria-required="true"
             />
           </label>
@@ -144,7 +145,9 @@ const Contact = () => {
         variants={slideIn("right", "tween", 0.2, 1)}
         className="xl:flex-1 xl:h-auto md:h-[550px] h-[350px] overflow-hidden rounded-2xl bg-brand-surface dark:bg-primary border border-brand-border dark:border-transparent shadow-premium dark:shadow-none shrink-0"
       >
-        <EarthCanvas />
+        <Suspense fallback={<div className="w-full h-full min-h-[350px] bg-brand-surface dark:bg-primary animate-pulse" />}>
+          <EarthCanvas />
+        </Suspense>
       </motion.div>
     </div>
   );

@@ -1,4 +1,3 @@
-/* Font loaded async via index.html link (display=swap) for better LCP */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -35,10 +34,9 @@
   --timeline-icon-ring: rgba(0, 0, 0, 0.12);
 }
 
-/* Hero: premium gradient overlay (light = soft lift, dark = depth) */
+/* Hero: premium gradient overlay (no background transition = compositor-friendly) */
 .hero-overlay {
   background: linear-gradient(180deg, rgba(250, 250, 250, 0.92) 0%, rgba(250, 250, 250, 0.5) 45%, transparent 100%);
-  transition: background 0.4s ease;
 }
 .dark .hero-overlay {
   background: linear-gradient(180deg, rgba(5, 8, 22, 0.6) 0%, rgba(5, 8, 22, 0.3) 50%, transparent 100%);
@@ -74,11 +72,9 @@
 html { color-scheme: light; }
 html.dark { color-scheme: dark; }
 
-/* Fluid theme transition on background and text */
+/* No transition on color/background to avoid non-composited animations (GPU-friendly) */
 body {
   overflow-x: hidden;
-  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Visible focus for keyboard users (a11y) */
@@ -87,23 +83,21 @@ body {
   outline-offset: 2px;
 }
 
-/* Glassmorphism: theme-aware border and background tint */
+/* Glassmorphism: theme-aware border and background tint (no color transition = composited-friendly) */
 .glass {
   background: var(--glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
-  transition: background-color 0.4s ease, border-color 0.4s ease;
 }
 
-/* Frosted glass: blur(20px) + noise overlay (futuristic minimalist) */
+/* Frosted glass: blur(20px) + noise overlay */
 .glass-frosted {
   position: relative;
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
-  transition: background-color 0.4s ease, border-color 0.4s ease;
 }
 .glass-frosted::before {
   content: "";
@@ -115,16 +109,15 @@ body {
   mix-blend-mode: overlay;
 }
 
-/* Vertical timeline: theme-aware line, content, arrow, icon */
+/* Vertical timeline: theme-aware (only box-shadow transition = compositor-friendly) */
 .vertical-timeline::before {
   background: var(--line-color) !important;
-  transition: background 0.4s ease;
 }
 .vertical-timeline-element-content {
   background: var(--timeline-content-bg) !important;
   color: var(--brand-text) !important;
   box-shadow: 0 1px 0 var(--timeline-content-bottom-border), var(--shadow-card, 0 2px 8px rgba(0,0,0,0.06)) !important;
-  transition: background-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+  transition: box-shadow 0.25s ease;
 }
 .dark .vertical-timeline-element-content {
   box-shadow: 0 3px 0 var(--timeline-content-bottom-border) !important;
@@ -139,7 +132,6 @@ body {
 }
 .vertical-timeline-element-content-arrow {
   border-right-color: var(--timeline-content-arrow) !important;
-  transition: border-color 0.4s ease;
 }
 .vertical-timeline--one-column-right .vertical-timeline-element-content-arrow {
   border-left-color: var(--timeline-content-arrow) !important;
@@ -147,10 +139,9 @@ body {
 .vertical-timeline-element-icon {
   background: var(--timeline-icon-bg) !important;
   box-shadow: 0 0 0 4px var(--timeline-icon-ring), inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(0, 0, 0, 0.05) !important;
-  transition: background 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* Section dividers: refined in light, vivid in dark */
+/* Section dividers (only box-shadow transition = compositor-friendly) */
 .section-divider-line {
   background: linear-gradient(
     90deg,
@@ -161,14 +152,14 @@ body {
     transparent 100%
   );
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
-  transition: background 0.4s ease, box-shadow 0.4s ease;
+  transition: box-shadow 0.25s ease;
 }
 .dark .section-divider-line {
   box-shadow: 0 0 20px rgba(86, 204, 242, 0.2);
 }
 .section-divider-dot {
   box-shadow: 0 0 8px rgba(86, 204, 242, 0.25);
-  transition: box-shadow 0.4s ease;
+  transition: box-shadow 0.25s ease;
 }
 .dark .section-divider-dot {
   box-shadow: 0 0 12px rgba(86, 204, 242, 0.5);
@@ -216,6 +207,13 @@ body {
   top: 1rem;
   outline: 2px solid var(--brand-text);
   outline-offset: 2px;
+}
+
+/* Compositor-friendly: only transform, opacity, box-shadow, border-color (avoids color/background) */
+.transition-composited {
+  transition-property: transform, opacity, box-shadow, border-color;
+  transition-duration: 300ms;
+  transition-timing-function: ease;
 }
 
 .hash-span {
@@ -331,10 +329,11 @@ body {
   transform: translateZ(0);
 }
 
-/* Skill icon shimmer */
+/* Skill icon shimmer (layer promoted so color isn’t in the animation path) */
 .skill-icon-wrap {
   position: relative;
   overflow: hidden;
+  transform: translateZ(0);
 }
 .skill-icon-wrap::after {
   content: "";

@@ -1,14 +1,14 @@
 import React, { useCallback } from "react";
-import Tilt from "react-tilt";
 import { motion } from "framer-motion";
 
 import { styles } from "../styles";
 import { github } from "../assets";
 import { SectionWrapper } from "../hoc";
 import { projects } from "../constants";
+import { ProgressiveImage, TiltCard } from "./ui";
 import { fadeIn, textVariant } from "../utils/motion";
 
-const TILT_OPTIONS = { max: 45, scale: 1, speed: 450 };
+const TILT_OPTIONS = { max: 45, scale: 1 };
 
 const ExternalLinkIcon = React.memo(function ExternalLinkIcon() {
   return (
@@ -44,16 +44,16 @@ const ProjectCard = React.memo(function ProjectCard({
 
   return (
     <motion.div variants={fadeIn("up", "spring", index * 0.5, 0.75)}>
-      <Tilt options={TILT_OPTIONS} className="bg-brand-surface dark:bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full border border-brand-border/50 dark:border-transparent shadow-premium dark:shadow-none transition-all duration-300">
+      <TiltCard options={TILT_OPTIONS} className="bg-brand-surface dark:bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full border border-brand-border/50 dark:border-transparent shadow-premium dark:shadow-none transition-composited">
         <div className="relative w-full h-[230px]">
-          <img
+          <ProgressiveImage
             src={image}
             alt={`${name} project screenshot`}
             width={360}
             height={230}
-            className="w-full h-full object-cover rounded-2xl"
-            loading="lazy"
-            decoding="async"
+            className="rounded-2xl object-cover"
+            wrapperClassName="h-full rounded-2xl"
+            sizes="(max-width: 640px) 100vw, 360px"
           />
           <div className="absolute inset-0 flex justify-end gap-2 m-3 card-img_hover">
             {live_preview_link && (
@@ -91,7 +91,7 @@ const ProjectCard = React.memo(function ProjectCard({
             </p>
           ))}
         </div>
-      </Tilt>
+      </TiltCard>
     </motion.div>
   );
 });

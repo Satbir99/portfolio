@@ -32,6 +32,7 @@ export function LenisProvider({ children, options = {} }) {
 
   useEffect(() => {
     let lenis;
+    let rafId;
     const init = async () => {
       const Lenis = (await import("lenis")).default;
       lenis = new Lenis({ ...DEFAULT_OPTIONS, ...options });
@@ -48,12 +49,17 @@ export function LenisProvider({ children, options = {} }) {
 
       function raf(time) {
         lenis.raf(time);
-        requestAnimationFrame(raf);
+        rafId = requestAnimationFrame(raf);
       }
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     };
-    init();
+    const id = typeof requestIdleCallback !== "undefined"
+      ? requestIdleCallback(() => init(), { timeout: 2000 })
+      : setTimeout(() => init(), 0);
     return () => {
+      if (typeof requestIdleCallback !== "undefined") cancelIdleCallback(id);
+      else clearTimeout(id);
+      if (rafId) cancelAnimationFrame(rafId);
       if (lenisRef.current) lenisRef.current.destroy();
     };
   }, []);

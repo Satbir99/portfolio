@@ -1,9 +1,9 @@
 import logo from "./logo.svg";
-import backend from "./backend.png";
-import creator from "./creator.png";
-import mobile from "./mobile.png";
-import web from "./web.png";
-import github from "./github.png";
+import backend from "./backend.webp";
+import creator from "./creator.webp";
+import mobile from "./mobile.webp";
+import web from "./web.webp";
+import github from "./github.webp";
 import menu from "./menu.svg";
 import close from "./close.svg";
 
@@ -30,9 +30,9 @@ import unacademy from "./company/unacademy.webp";
 import tataSteel from "./company/tataSteel.webp";
 import tataTechnologies from "./company/tataTechnologies.webp";
 
-import glimpseGit from "./project/glimpseGit.png";
-import frp from "./project/frp.png";
-import todo from "./project/todo.png";
+import glimpseGit from "./project/glimpseGit.webp";
+import frp from "./project/frp.webp";
+import todo from "./project/todo.webp";
 
 export {
   logo,
