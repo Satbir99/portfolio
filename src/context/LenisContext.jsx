@@ -53,9 +53,11 @@ export function LenisProvider({ children, options = {} }) {
       }
       rafId = requestAnimationFrame(raf);
     };
+    const isMobile = typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches;
+    const timeout = isMobile ? 4500 : 2000;
     const id = typeof requestIdleCallback !== "undefined"
-      ? requestIdleCallback(() => init(), { timeout: 2000 })
-      : setTimeout(() => init(), 0);
+      ? requestIdleCallback(() => init(), { timeout })
+      : setTimeout(() => init(), isMobile ? 2500 : 0);
     return () => {
       if (typeof requestIdleCallback !== "undefined") cancelIdleCallback(id);
       else clearTimeout(id);

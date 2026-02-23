@@ -12,7 +12,6 @@ export default defineConfig({
       output: {
         manualChunks: (id) => {
           if (id.includes("node_modules/react/") || id.includes("node_modules/react-dom/")) return "react-vendor";
-          if (id.includes("node_modules/react-router")) return "router";
           if (id.includes("node_modules/framer-motion")) return "framer-motion";
           if (id.includes("node_modules/three") || id.includes("node_modules/@react-three")) return "three";
           if (id.includes("node_modules/maath")) return "three";
@@ -27,5 +26,8 @@ export default defineConfig({
     sourcemap: false,
     reportCompressedSize: true,
     chunkSizeWarningLimit: 600,
+  },
+  esbuild: {
+    drop: ["console", "debugger"],
   },
 });

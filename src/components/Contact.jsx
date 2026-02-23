@@ -14,10 +14,26 @@ const PUBLIC_KEY = import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY;
 
 const INITIAL_FORM = { name: "", email: "", message: "" };
 
+/** True when viewport is large enough to show the Earth 3D (avoids tier/breakpoint mismatches). */
+function useShowEarthOnLargeScreen() {
+  const [show, setShow] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(min-width: 1024px)").matches
+  );
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const update = () => setShow(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+  return show;
+}
+
 const Contact = () => {
   const formRef = useRef();
   const [form, setForm] = useState(INITIAL_FORM);
   const [loading, setLoading] = useState(false);
+  const showEarth = useShowEarthOnLargeScreen();
 
   useEffect(() => {
     if (PUBLIC_KEY) emailjs.init(PUBLIC_KEY);
@@ -65,11 +81,11 @@ const Contact = () => {
 
   return (
     <div
-      className="xl:mt-12 flex xl:flex-row flex-col-reverse gap-0 overflow-hidden"
+      className={`xl:mt-12 flex overflow-hidden ${showEarth ? "xl:flex-row flex-col-reverse gap-0" : "flex-col gap-6"}`}
     >
       <motion.div
         variants={slideIn("left", "tween", 0.2, 1)}
-        className="flex-[0.75] glass p-8 rounded-2xl border xl:mr-0 shrink-0 shadow-premium-lg dark:shadow-none"
+        className={`glass rounded-2xl border shrink-0 shadow-premium-lg dark:shadow-none ${showEarth ? "flex-[0.75] p-8 xl:mr-0" : "p-6 sm:p-8 w-full"}`}
       >
         <p className={styles.sectionSubText}>Get in touch</p>
         <h3 className={styles.sectionHeadText}>Contact.</h3>
@@ -135,20 +151,23 @@ const Contact = () => {
         </form>
       </motion.div>
 
-      {/* Solid strip to mask canvas bleed */}
+      {/* Solid strip to mask canvas bleed (desktop only) */}
       <div
         className="hidden xl:block w-4 flex-shrink-0 bg-brand-bg min-h-[400px]"
         aria-hidden="true"
       />
 
-      <motion.div
-        variants={slideIn("right", "tween", 0.2, 1)}
-        className="xl:flex-1 xl:h-auto md:h-[550px] h-[350px] overflow-hidden rounded-2xl bg-brand-surface dark:bg-primary border border-brand-border dark:border-transparent shadow-premium dark:shadow-none shrink-0"
-      >
-        <Suspense fallback={<div className="w-full h-full min-h-[350px] bg-brand-surface dark:bg-primary animate-pulse" />}>
-          <EarthCanvas />
-        </Suspense>
-      </motion.div>
+      {/* Earth 3D: show on large screens (min-width: 1024px) so it always appears on desktop */}
+      {showEarth && (
+        <motion.div
+          variants={slideIn("right", "tween", 0.2, 1)}
+          className="xl:flex-1 xl:h-auto md:h-[550px] h-[350px] overflow-hidden rounded-2xl bg-brand-surface dark:bg-primary border border-brand-border dark:border-transparent shadow-premium dark:shadow-none shrink-0"
+        >
+          <Suspense fallback={<div className="w-full h-full min-h-[350px] bg-brand-surface dark:bg-primary animate-pulse" />}>
+            <EarthCanvas />
+          </Suspense>
+        </motion.div>
+      )}
     </div>
   );
 };

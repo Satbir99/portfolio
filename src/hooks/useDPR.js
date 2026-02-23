@@ -30,12 +30,21 @@ function getDPR(max, mobileMax, isMobile) {
   return Math.min(cap, Math.max(1, Math.floor(ratio * 10) / 10));
 }
 
+function getInitialTier() {
+  if (typeof window === "undefined") return "high";
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const mobile = window.matchMedia("(max-width: 768px)").matches;
+  if (reduced) return "minimal";
+  if (mobile) return "low";
+  return "high";
+}
+
 /**
  * Performance tier for 3D: "high" (desktop), "low" (mobile), "minimal" (reduced motion).
- * Use to reduce particles, shadow resolution, post-processing, etc.
+ * Initial tier is set from first paint so mobile never requests heavy 3D chunks.
  */
 export function usePerformanceTier() {
-  const [tier, setTier] = useState("high");
+  const [tier, setTier] = useState(getInitialTier);
 
   useEffect(() => {
     const mobileMq = window.matchMedia("(max-width: 768px)");

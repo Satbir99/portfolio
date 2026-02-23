@@ -23,6 +23,7 @@ import {
   tataSteel,
   tataTechnologies,
   glimpseGit,
+  fastapi,
   frp,
   todo,
 } from "../assets";
@@ -105,6 +106,10 @@ const technologies = [
   {
     name: "Node JS",
     icon: nodejs,
+  },
+  {
+    name: "FastAPI",
+    icon: fastapi,
   },
   {
     name: "MongoDB",

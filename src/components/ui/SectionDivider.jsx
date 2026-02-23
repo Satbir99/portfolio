@@ -1,35 +1,19 @@
-import React, { useRef, memo } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import React, { memo } from "react";
 
 /**
- * Scroll-reactive divider between sections. The line "draws" in as you scroll into view (Lenis + useScroll).
+ * Static section divider with reserved height to prevent CLS (was main Lighthouse culprit).
+ * Scroll-based animation removed so layout is stable and main-thread work is lower on mobile.
  */
 export const SectionDivider = memo(function SectionDivider() {
-  const ref = useRef(null);
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  const scaleX = useTransform(scrollYProgress, [0.1, 0.35, 0.65, 0.9], [0, 1, 1, 0]);
-  const opacity = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [0.3, 1, 1, 0.3]);
-
   return (
-    <div ref={ref} className="relative w-full py-12 sm:py-16 flex justify-center items-center overflow-hidden">
-      <motion.div
-        style={{ opacity }}
-        className="absolute inset-0 flex justify-center items-center"
-      >
-        <motion.div
-          style={{ scaleX, transformOrigin: "center" }}
-          className="section-divider-line h-px w-full max-w-2xl mx-auto rounded-full"
-        />
-      </motion.div>
-      <motion.div
-        style={{ opacity }}
-        className="absolute w-2 h-2 rounded-full bg-accent-blue section-divider-dot"
-      />
+    <div
+      className="relative w-full py-8 sm:py-16 flex justify-center items-center overflow-hidden min-h-[4rem] sm:min-h-[8rem]"
+      style={{ contain: "layout" }}
+    >
+      <div className="absolute inset-0 flex justify-center items-center">
+        <div className="section-divider-line h-px w-full max-w-2xl mx-auto rounded-full" />
+      </div>
+      <div className="absolute w-2 h-2 rounded-full bg-accent-blue section-divider-dot" />
     </div>
   );
 });

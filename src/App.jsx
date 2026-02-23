@@ -1,5 +1,4 @@
 import { lazy, Suspense, memo } from "react";
-import { BrowserRouter } from "react-router-dom";
 
 import { LenisProvider } from "./context/LenisContext";
 import { ThemeProvider } from "./context/ThemeContext";
@@ -32,7 +31,7 @@ function AppContent() {
         <div className="hero-section relative bg-hero-pattern bg-cover bg-no-repeat bg-center">
           <div className="hero-overlay absolute inset-0 pointer-events-none" aria-hidden="true" />
           <Navbar />
-          <Hero />
+          <Hero isMobile={perf.isMobile} />
         </div>
         <SectionDivider />
         <Suspense fallback={<SectionFallback />}>
@@ -47,13 +46,15 @@ function AppContent() {
           <Suspense fallback={<SectionFallback />}>
             <Tech />
           </Suspense>
-          <Suspense fallback={null}>
-            <StarsCanvas
-              pointCount={perf.pointCount}
-              lineSegments={lineSegments}
-              dprMax={perf.dpr}
-            />
-          </Suspense>
+          {!perf.isMobile && (
+            <Suspense fallback={null}>
+              <StarsCanvas
+                pointCount={perf.pointCount}
+                lineSegments={lineSegments}
+                dprMax={perf.dpr}
+              />
+            </Suspense>
+          )}
         </div>
         <SectionDivider />
         <Suspense fallback={<SectionFallback />}>
@@ -68,6 +69,7 @@ function AppContent() {
           pointCount={perf.pointCount}
           lineSegments={lineSegments}
           dprMax={perf.dpr}
+          isMobile={perf.isMobile}
         >
           <Suspense fallback={<SectionFallback />}>
             <Contact />
@@ -80,13 +82,11 @@ function AppContent() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <ThemeProvider>
-        <LenisProvider>
-          <AppContent />
-        </LenisProvider>
-      </ThemeProvider>
-    </BrowserRouter>
+    <ThemeProvider>
+      <LenisProvider>
+        <AppContent />
+      </LenisProvider>
+    </ThemeProvider>
   );
 }
 

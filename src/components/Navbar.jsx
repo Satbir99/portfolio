@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState, useRef, memo } from "react";
-import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { styles } from "../styles";
@@ -78,7 +77,8 @@ const Navbar = memo(function Navbar() {
     return () => window.removeEventListener("pointerdown", handleClick);
   }, [toggle]);
 
-  const handleLogoClick = useCallback(() => {
+  const handleLogoClick = useCallback((e) => {
+    e.preventDefault();
     setActive("");
     setToggle(false);
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -100,7 +100,7 @@ const Navbar = memo(function Navbar() {
       aria-label="Main"
     >
       <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
-        <Link to="/" className="flex items-center gap-2 min-w-0" onClick={handleLogoClick}>
+        <a href="#" className="flex items-center gap-2 min-w-0" onClick={handleLogoClick} aria-label="Home">
           <img
             src={logo}
             alt="Satbir Singh portfolio logo"
@@ -114,7 +114,7 @@ const Navbar = memo(function Navbar() {
             Satbir&nbsp;
             <span className="hidden lg:inline">| Developer</span>
           </p>
-        </Link>
+        </a>
 
         {/* Desktop nav: from lg (1024px) up — hamburger below to avoid overlap with hero */}
         <div className="hidden lg:flex items-center gap-4 xl:gap-8">

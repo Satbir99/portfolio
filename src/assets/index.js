@@ -20,6 +20,7 @@ import redux from "./tech/redux.png";
 import tailwind from "./tech/tailwind.png";
 import typescript from "./tech/typescript.png";
 import threejs from "./tech/threejs.svg";
+import fastapi from "./tech/fastapi.svg";
 
 import trumio from "./company/trumio.webp";
 import innovaccer from "./company/innovaccer.webp";
@@ -57,6 +58,7 @@ export {
   typescript,
   threejs,
   glimpseGit,
+  fastapi,
   frp,
   todo,
   trumio,
